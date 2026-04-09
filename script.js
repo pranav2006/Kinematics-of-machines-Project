@@ -28,13 +28,11 @@ function syncInputs(sliderId, inputId) {
     const slider = document.getElementById(sliderId);
     const input = document.getElementById(inputId);
 
-    // Slider → Input
     slider.addEventListener("input", () => {
         input.value = slider.value;
         compute();
     });
 
-    // Input → Slider
     input.addEventListener("input", () => {
         slider.value = input.value;
         compute();
@@ -70,19 +68,16 @@ function drawMechanism(r, l, theta, cos_phi) {
 
     let x_slider = x_crank + l * scale * cos_phi;
 
-    // Crank
     mechCtx.beginPath();
     mechCtx.moveTo(x0, y0);
     mechCtx.lineTo(x_crank, y_crank);
     mechCtx.stroke();
 
-    // Rod
     mechCtx.beginPath();
     mechCtx.moveTo(x_crank, y_crank);
     mechCtx.lineTo(x_slider, y0);
     mechCtx.stroke();
 
-    // Slider
     mechCtx.fillRect(x_slider - 5, y0 - 5, 20, 10);
 }
 
@@ -123,17 +118,16 @@ function compute() {
 
     chart.update();
 
-    // Live values
+
     document.getElementById("w2").innerText = current.w2.toFixed(2);
     document.getElementById("alpha2").innerText = current.alpha2.toFixed(2);
     document.getElementById("vs").innerText = current.vs.toFixed(2);
     document.getElementById("as").innerText = current.as.toFixed(2);
 
-    // Draw mechanism
+
     drawMechanism(r, l, thetaRad, current.cos_phi);
 }
 
-// Event listeners
 document.querySelectorAll("input").forEach(el => {
     el.addEventListener("input", compute);
 });
